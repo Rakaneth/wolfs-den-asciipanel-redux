@@ -1,0 +1,20 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+repositories {
+    jcenter()
+    maven { url 'https://jitpack.io'} //change
+}
+
+dependencies {
+    implementation "com.github.trystan:AsciiPanel:$ascii_panel_ver"
+}
+
+application {
+    mainClassName = 'com.rakaneth.wolfsden.Program'
+}
+
+group 'com.rakaneth'
+version '0.0-SNAPSHOT'

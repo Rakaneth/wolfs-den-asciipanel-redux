@@ -1,0 +1,9 @@
+# Java artifacts
+.classpath
+.project
+.gradle/
+.settings/
+bin/
+
+#VSCode
+.vscode/
