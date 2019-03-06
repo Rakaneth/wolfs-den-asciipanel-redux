@@ -38,7 +38,7 @@ public class Program extends JFrame implements KeyListener {
     public static void main(String[] args) {
         System.out.println("Test");
         Program app = new Program();
-        app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        app.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         app.setVisible(true);
     }
 
@@ -51,7 +51,11 @@ public class Program extends JFrame implements KeyListener {
     public void keyPressed(KeyEvent e) {
         GameState curState = GSM.get().curState();
         curState.handleInput(e);
-        repaint();
+        if (GSM.get().stackEmpty()) {
+            System.exit(0);
+        } else {
+            repaint();
+        }
     }
 
     @Override
