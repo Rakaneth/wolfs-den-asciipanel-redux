@@ -10,6 +10,7 @@ repositories {
 
 dependencies {
     implementation "com.github.trystan:AsciiPanel:$ascii_panel_ver"
+    implementation "com.github.squidpony.SquidLib:squidlib-util:$squidlib_ver"
 }
 
 application {
