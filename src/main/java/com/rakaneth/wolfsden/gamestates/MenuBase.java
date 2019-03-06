@@ -22,7 +22,7 @@ abstract public class MenuBase implements GameState {
         this.items = items;
         m_height = items.size() + 2;
         String longest = items.stream().map(el -> el.getDisplay()).max(Comparator.comparing(String::length)).orElse("");
-        m_width = longest.length() + 3;
+        m_width = longest.length() + 2;
         mx = (GameConfig.SCREEN_W - longest.length()) / 2 - 1;
         my = (GameConfig.SCREEN_H - m_height) / 2 - 1;
         mx2 = mx + m_width - 1;
@@ -53,13 +53,6 @@ abstract public class MenuBase implements GameState {
         screen.write(ur, mx2, my);
         screen.write(ll, mx, my2);
         screen.write(lr, mx2, my2);
-
-        for (int row = 0; row < this.items.size(); row++) {
-            screen.write(items.get(row).getDisplay(), mx + 2, my + row + 1);
-            if (selected == row) {
-                screen.write('>', mx + 1, my + row + 1);
-            }
-        }
     }
 
     @Override

@@ -21,7 +21,7 @@ public class Program extends JFrame implements KeyListener {
         screen = new AsciiPanel(100, 40);
         add(screen);
         pack();
-        newGame();
+        GSM.get().push(new TitleState());
         repaint();
         addKeyListener(this);
     }
@@ -29,10 +29,6 @@ public class Program extends JFrame implements KeyListener {
     public void repaint() {
         GSM.get().curState().render(screen);
         super.repaint();
-    }
-
-    private void newGame() {
-        GSM.get().push(new TitleState());
     }
 
     public static void main(String[] args) {
