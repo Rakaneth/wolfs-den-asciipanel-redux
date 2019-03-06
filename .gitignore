@@ -3,6 +3,8 @@
 .project
 .gradle/
 .settings/
+.idea/
+out/
 bin/
 
 #VSCode
