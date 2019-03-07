@@ -28,6 +28,13 @@ public class GSM {
         lastState.exit();
     }
 
+    public void set(GameState state) {
+        for (int i=0; i<states.size(); i++) {
+            pop();
+        }
+        push(state);
+    }
+
     public GameState curState() {
         return states.peek();
     }

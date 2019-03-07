@@ -16,6 +16,7 @@ public class GameObjectFactory {
     private boolean blockMove;
     private boolean blockSight;
     private int layer;
+    private String mapID;
 
     public GameObjectFactory() {
         desc = "No desc";
@@ -27,6 +28,7 @@ public class GameObjectFactory {
         blockMove = false;
         blockSight = false;
         layer = 0;
+        mapID = "No map id";
     }
 
     public GameObjectFactory setID(String id) {
@@ -74,8 +76,14 @@ public class GameObjectFactory {
         return this;
     }
 
-    public void setLayer(int layer) {
+    public GameObjectFactory setLayer(int layer) {
         this.layer = layer;
+        return this;
+    }
+
+    public GameObjectFactory setStartMap(String mapID) {
+        this.mapID = mapID;
+        return this;
     }
 
     public GameObject build() {
@@ -90,99 +98,5 @@ public class GameObjectFactory {
         foetus.blockMove = blockMove;
         foetus.layer = layer;
         return foetus;
-    }
-
-
-
-    static public GameObject wall(Coord c, Color wallColor, String name,
-                                  String desc) {
-        return new GameObjectFactory().setFG(Color.WHITE)
-                                      .setBG(wallColor)
-                                      .setGlyph('#')
-                                      .setName(name)
-                                      .setDesc(desc)
-                                      .setStartPos(c)
-                                      .setBlockSight()
-                                      .setBlockMove()
-                                      .build();
-    }
-
-    static public GameObject floor(Coord c, Color floorColor, String name,
-                                   String desc) {
-        return new GameObjectFactory().setBG(floorColor)
-                                      .setGlyph(' ')
-                                      .setStartPos(c)
-                                      .setName(name)
-                                      .setDesc(desc)
-                                      .build();
-    }
-
-    static public GameObject shallow(Coord c) {
-        return new GameObjectFactory().setBG(Color.CYAN)
-                                      .setGlyph(' ')
-                                      .setStartPos(c)
-                                      .setName("shallow water")
-                                      .setDesc("A body of shallow water")
-                                      .build();
-    }
-
-    static public GameObject deep(Coord c) {
-        return new GameObjectFactory().setBG(Color.BLUE)
-                                      .setGlyph(' ')
-                                      .setStartPos(c)
-                                      .setName("deep water")
-                                      .setDesc("A body of deep water")
-                                      .setBlockMove()
-                                      .build();
-    }
-
-    static public GameObject bridge(Coord c) {
-        return new GameObjectFactory().setBG(GameConfig.SEPIA)
-                                      .setFG(Color.WHITE)
-                                      .setGlyph(':')
-                                      .setStartPos(c)
-                                      .setName("bridge")
-                                      .setDesc("A length of bridge")
-                                      .build();
-    }
-
-    static public GameObject closedDoor(Coord c) {
-        return new GameObjectFactory().setBG(GameConfig.SEPIA)
-                                      .setFG(Color.WHITE)
-                                      .setGlyph('+')
-                                      .setStartPos(c)
-                                      .setName("closed door")
-                                      .setDesc("A closed door")
-                                      .setBlockSight()
-                                      .setBlockMove()
-                                      .build();
-    }
-
-    static public GameObject openDoor(Coord c) {
-        return new GameObjectFactory().setBG(GameConfig.SEPIA)
-                                      .setFG(Color.WHITE)
-                                      .setGlyph('/')
-                                      .setStartPos(c)
-                                      .setName("open door")
-                                      .setDesc("An open door")
-                                      .build();
-    }
-
-    static public GameObject downStairs(Coord c) {
-        return new GameObjectFactory().setFG(Color.YELLOW)
-                                      .setGlyph('>')
-                                      .setStartPos(c)
-                                      .setName("stairs")
-                                      .setDesc("stairs downward")
-                                      .build();
-    }
-
-    static public GameObject upStairs(Coord c) {
-        return new GameObjectFactory().setFG(Color.YELLOW)
-                                      .setGlyph('<')
-                                      .setStartPos(c)
-                                      .setName("stairs")
-                                      .setDesc("stairs upward")
-                                      .build();
     }
 }

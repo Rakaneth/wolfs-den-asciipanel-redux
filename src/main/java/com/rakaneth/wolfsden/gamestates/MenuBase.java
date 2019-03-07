@@ -7,6 +7,7 @@ import java.util.List;
 
 import asciiPanel.AsciiPanel;
 import com.rakaneth.wolfsden.GameConfig;
+import com.rakaneth.wolfsden.GameUtils;
 
 abstract public class MenuBase implements GameState {
     protected int m_width;
@@ -33,28 +34,7 @@ abstract public class MenuBase implements GameState {
 
     @Override
     public void render(AsciiPanel screen) {
-        screen.clear(' ', mx, my, m_width, m_height, Color.BLACK, Color.BLACK);
-        char ul = 0xC9;
-        char ur = 0xBB;
-        char ll = 0xC8;
-        char lr = 0xBC;
-        char hz = 0xCD;
-        char vt = 0xBA;
-
-        for (int x = mx + 1; x < mx2; x++) {
-            screen.write(hz, x, my);
-            screen.write(hz, x, my2);
-        }
-
-        for (int y = my + 1; y < my2; y++) {
-            screen.write(vt, mx, y);
-            screen.write(vt, mx2, y);
-        }
-
-        screen.write(ul, mx, my);
-        screen.write(ur, mx2, my);
-        screen.write(ll, mx, my2);
-        screen.write(lr, mx2, my2);
+        GameUtils.borderArea(screen, mx, my, m_width, m_height, null);
     }
 
     @Override

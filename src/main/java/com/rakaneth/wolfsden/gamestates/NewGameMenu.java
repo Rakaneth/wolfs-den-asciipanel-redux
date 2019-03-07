@@ -21,7 +21,7 @@ public class NewGameMenu extends MenuBase {
         GSM.get().pop();
         switch (e.getValue()) {
         case "new":
-            // TODO: push chargen state
+            GSM.get().set(new PlayState());
             break;
         case "continue":
             // TODO: push saved game state

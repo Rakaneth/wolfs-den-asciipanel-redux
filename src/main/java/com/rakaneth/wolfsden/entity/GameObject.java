@@ -12,10 +12,11 @@ public class GameObject {
     Color bg;
     String name;
     String desc;
-    String id;
+    private String id;
     int layer;
     boolean blockMove;
     boolean blockSight;
+    String mapID;
 
     GameObject(String id) {
         pos = Coord.get(0, 0);
@@ -25,6 +26,7 @@ public class GameObject {
         name = "No name";
         desc = "No desc";
         layer = 0;
+        mapID = "None";
         this.id = id == null ?
             SquidID.randomUUID()
                    .toString() :
@@ -43,5 +45,17 @@ public class GameObject {
 
     public void setPos(Coord p) {
         pos = p;
+    }
+
+    public String getID() {
+        return this.id;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public String getDesc() {
+        return this.desc;
     }
 }

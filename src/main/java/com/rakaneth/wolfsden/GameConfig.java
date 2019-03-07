@@ -1,5 +1,8 @@
 package com.rakaneth.wolfsden;
 
+import squidpony.squidmath.RNG;
+import squidpony.squidmath.StatefulRNG;
+
 import java.awt.*;
 
 public class GameConfig {
@@ -19,11 +22,11 @@ public class GameConfig {
     public static final int MSG_Y = MAP_H;
     public static final int SKILL_W = MSG_W;
     public static final int SKILL_H = MSG_H;
-    public static final int SKILL_X = MSG_H;
+    public static final int SKILL_X = MSG_W;
     public static final int SKILL_Y = MSG_Y;
-    public static final int INFO_W = MAP_W;
+    public static final int INFO_W = STAT_W;
     public static final int INFO_H = MSG_H;
     public static final int INFO_X = MAP_W;
     public static final int INFO_Y = MAP_H;
-    public static final Color SEPIA = new Color(127, 101, 96);
+    public static final RNG RNG = new StatefulRNG(0xDEADBEEFL);
 }
