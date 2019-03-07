@@ -1,5 +1,7 @@
 package com.rakaneth.wolfsden;
 
+import java.awt.*;
+
 public class GameConfig {
     public static final int SCREEN_W = 100;
     public static final int SCREEN_H = 40;
@@ -23,4 +25,5 @@ public class GameConfig {
     public static final int INFO_H = MSG_H;
     public static final int INFO_X = MAP_W;
     public static final int INFO_Y = MAP_H;
+    public static final Color SEPIA = new Color(127, 101, 96);
 }
