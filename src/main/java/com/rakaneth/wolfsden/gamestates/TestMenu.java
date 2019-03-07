@@ -15,6 +15,7 @@ public class TestMenu extends MenuBase {
 
     @Override
     protected void select(MenuEntry e) {
-        System.out.printf("Selected entry %s with value %s\n", e.getDisplay(), e.getValue());
+        System.out.printf("Selected entry %s with value %s\n", e.getDisplay(),
+                          e.getValue());
     }
 }

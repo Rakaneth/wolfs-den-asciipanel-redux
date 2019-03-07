@@ -21,7 +21,9 @@ abstract public class MenuBase implements GameState {
     public MenuBase(List<MenuEntry> items) {
         this.items = items;
         m_height = items.size() + 2;
-        String longest = items.stream().map(el -> el.getDisplay()).max(Comparator.comparing(String::length)).orElse("");
+        String longest = items.stream().map(el -> el.getDisplay())
+                              .max(Comparator.comparing(String::length))
+                              .orElse("");
         m_width = longest.length() + 2;
         mx = (GameConfig.SCREEN_W - longest.length()) / 2 - 1;
         my = (GameConfig.SCREEN_H - m_height) / 2 - 1;

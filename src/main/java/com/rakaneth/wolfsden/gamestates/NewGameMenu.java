@@ -7,7 +7,8 @@ import asciiPanel.AsciiPanel;
 public class NewGameMenu extends MenuBase {
 
     public NewGameMenu() {
-        super(new MenuBuilder().add("New Game", "new").add("Continue", "continue").build());
+        super(new MenuBuilder().add("New Game", "new")
+                               .add("Continue", "continue").build());
     }
 
     @Override
