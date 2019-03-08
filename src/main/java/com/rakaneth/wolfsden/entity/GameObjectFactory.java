@@ -1,9 +1,11 @@
 package com.rakaneth.wolfsden.entity;
 
-import com.rakaneth.wolfsden.GameConfig;
+import com.rakaneth.wolfsden.Swatch;
 import squidpony.squidmath.Coord;
 
 import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GameObjectFactory {
     private String id;
@@ -17,6 +19,8 @@ public class GameObjectFactory {
     private boolean blockSight;
     private int layer;
     private String mapID;
+    private GameObject.GameObjectType type;
+    final private Map<String, Integer> statBlock;
 
     public GameObjectFactory() {
         desc = "No desc";
@@ -29,6 +33,8 @@ public class GameObjectFactory {
         blockSight = false;
         layer = 0;
         mapID = "No map id";
+        type = GameObject.GameObjectType.CREATURE;
+        statBlock = new HashMap<>();
     }
 
     public GameObjectFactory setID(String id) {
@@ -86,8 +92,28 @@ public class GameObjectFactory {
         return this;
     }
 
+    public GameObjectFactory setObjectType(GameObject.GameObjectType type) {
+        this.type = type;
+        return this;
+    }
+
+    public GameObjectFactory setStat(String statID, int baseVal) {
+        statBlock.put(statID, baseVal);
+        return this;
+    }
+
+    public GameObjectFactory setBaseCreatureStats(int str, int stam, int spd,
+                                                  int skl, int sag, int smt) {
+        return setStat("str", str).setStat("stam", stam)
+                                  .setStat("spd", spd)
+                                  .setStat("skl", skl)
+                                  .setStat("sag", sag)
+                                  .setStat("smt", smt);
+
+    }
+
     public GameObject build() {
-        GameObject foetus = new GameObject(id);
+        GameObject foetus = new GameObject(type, id);
         foetus.name = name;
         foetus.desc = desc;
         foetus.glyph = glyph;
@@ -97,6 +123,24 @@ public class GameObjectFactory {
         foetus.blockSight = blockSight;
         foetus.blockMove = blockMove;
         foetus.layer = layer;
+        statBlock.forEach((id, val) -> {
+            foetus.addStat(id, new Stat(val));
+        });
         return foetus;
+    }
+
+    static public GameObject samplePlayer(String mapID) {
+        return new GameObjectFactory().setBlockMove()
+                                      .setName("Braw")
+                                      .setDesc("Wolfborn of Fang Wood")
+                                      .setStartMap(mapID)
+                                      .setFG(Swatch.WOLF)
+                                      .setID("player")
+                                      .setLayer(4)
+                                      .setObjectType(
+                                          GameObject.GameObjectType.CREATURE)
+                                      .setBaseCreatureStats(15, 15, 10, 5, 10,
+                                                            5)
+                                      .build();
     }
 }

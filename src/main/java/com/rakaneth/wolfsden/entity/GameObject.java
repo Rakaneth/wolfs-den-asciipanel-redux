@@ -4,6 +4,8 @@ import squidpony.squidmath.Coord;
 import squidpony.squidmath.SquidID;
 
 import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GameObject {
     Coord pos;
@@ -12,13 +14,22 @@ public class GameObject {
     Color bg;
     String name;
     String desc;
+    String mapID;
     private String id;
     int layer;
     boolean blockMove;
     boolean blockSight;
-    String mapID;
+    final Map<String, Stat> statBlock;
+    final GameObjectType type;
 
-    GameObject(String id) {
+    public enum GameObjectType {
+        CREATURE,
+        ITEM,
+        EQUIPMENT
+    }
+
+    GameObject(GameObjectType type, String id) {
+        this.type = type;
         pos = Coord.get(0, 0);
         glyph = '@';
         fg = null;
@@ -27,16 +38,19 @@ public class GameObject {
         desc = "No desc";
         layer = 0;
         mapID = "None";
-        this.id = id == null ?
-            SquidID.randomUUID()
-                   .toString() :
-            id;
+        if (id == null) {
+            this.id = SquidID.randomUUID()
+                             .toString();
+        } else {
+            this.id = id;
+        }
         this.blockMove = false;
         this.blockSight = false;
+        statBlock = new HashMap<>();
     }
 
-    GameObject() {
-        this(null);
+    GameObject(GameObjectType type) {
+        this(type, null);
     }
 
     public Coord getPos() {
@@ -57,5 +71,22 @@ public class GameObject {
 
     public String getDesc() {
         return this.desc;
+    }
+
+    public Stat getStat(String statID) {
+        return statBlock.getOrDefault(statID, Stat.ZERO_STAT);
+    }
+
+    public int getStatValue(String statID) {
+        return statBlock.getOrDefault(statID, Stat.ZERO_STAT)
+                        .getValue();
+    }
+
+    public void addStat(String statID, Stat stat) {
+        statBlock.put(statID, stat);
+    }
+
+    public void removeStat(String statID) {
+        statBlock.remove(statID);
     }
 }

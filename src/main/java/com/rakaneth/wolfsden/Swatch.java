@@ -9,4 +9,5 @@ public final class Swatch {
     public static final Color DEEP = Color.BLUE;
     public static final Color STAIRS = Color.YELLOW;
     public static final Color PORTAL = Color.ORANGE;
+    public static final Color WOLF = new Color(191, 171, 143);
 }
