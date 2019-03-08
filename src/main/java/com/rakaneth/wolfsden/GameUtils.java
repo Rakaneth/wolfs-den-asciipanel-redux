@@ -10,7 +10,7 @@ public final class GameUtils {
             return low;
         } else if (val.compareTo(high) > 0) {
             return high;
-        } else{
+        } else {
             return val;
         }
     }
@@ -20,7 +20,8 @@ public final class GameUtils {
         return clamp(val, low, high) == val;
     }
 
-    public static void borderArea(AsciiPanel screen, int x, int y, int w, int h, String caption) {
+    public static void borderArea(AsciiPanel screen, int x, int y, int w, int h,
+                                  String caption) {
         int x2 = x + w - 1;
         int y2 = y + h - 1;
         screen.clear(' ', x, y, w, h, Color.BLACK, Color.BLACK);
@@ -47,7 +48,7 @@ public final class GameUtils {
         screen.write(lr, x2, y2);
 
         if (caption != null) {
-            screen.write(caption, x+1, y);
+            screen.write(caption, x + 1, y);
         }
     }
 }

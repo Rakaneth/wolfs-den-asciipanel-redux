@@ -3,8 +3,6 @@ package com.rakaneth.wolfsden;
 import squidpony.squidmath.RNG;
 import squidpony.squidmath.StatefulRNG;
 
-import java.awt.*;
-
 public class GameConfig {
     public static final int SCREEN_W = 100;
     public static final int SCREEN_H = 40;

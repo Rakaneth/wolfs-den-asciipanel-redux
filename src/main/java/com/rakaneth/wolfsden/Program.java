@@ -1,15 +1,13 @@
 package com.rakaneth.wolfsden;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-
-import javax.swing.JFrame;
-
+import asciiPanel.AsciiPanel;
 import com.rakaneth.wolfsden.gamestates.GSM;
 import com.rakaneth.wolfsden.gamestates.GameState;
 import com.rakaneth.wolfsden.gamestates.TitleState;
 
-import asciiPanel.AsciiPanel;
+import javax.swing.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 public class Program extends JFrame implements KeyListener {
     private static final long serialVersionUID = 0xDEADBEEFL;
@@ -21,13 +19,16 @@ public class Program extends JFrame implements KeyListener {
         screen = new AsciiPanel(100, 40);
         add(screen);
         pack();
-        GSM.get().push(new TitleState());
+        GSM.get()
+           .push(new TitleState());
         repaint();
         addKeyListener(this);
     }
 
     public void repaint() {
-        GSM.get().curState().render(screen);
+        GSM.get()
+           .curState()
+           .render(screen);
         super.repaint();
     }
 
@@ -38,24 +39,23 @@ public class Program extends JFrame implements KeyListener {
         app.setVisible(true);
     }
 
-    @Override
-    public void keyTyped(KeyEvent e) {
+    @Override public void keyTyped(KeyEvent e) {
 
     }
 
-    @Override
-    public void keyPressed(KeyEvent e) {
-        GameState curState = GSM.get().curState();
+    @Override public void keyPressed(KeyEvent e) {
+        GameState curState = GSM.get()
+                                .curState();
         curState.handleInput(e);
-        if (GSM.get().stackEmpty()) {
+        if (GSM.get()
+               .stackEmpty()) {
             System.exit(0);
         } else {
             repaint();
         }
     }
 
-    @Override
-    public void keyReleased(KeyEvent e) {
+    @Override public void keyReleased(KeyEvent e) {
 
     }
 

@@ -1,13 +1,12 @@
 package com.rakaneth.wolfsden.gamestates;
 
-import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.util.Comparator;
-import java.util.List;
-
 import asciiPanel.AsciiPanel;
 import com.rakaneth.wolfsden.GameConfig;
 import com.rakaneth.wolfsden.GameUtils;
+
+import java.awt.event.KeyEvent;
+import java.util.Comparator;
+import java.util.List;
 
 abstract public class MenuBase implements GameState {
     protected int m_width;
@@ -22,7 +21,8 @@ abstract public class MenuBase implements GameState {
     public MenuBase(List<MenuEntry> items) {
         this.items = items;
         m_height = items.size() + 2;
-        String longest = items.stream().map(el -> el.getDisplay())
+        String longest = items.stream()
+                              .map(el -> el.getDisplay())
                               .max(Comparator.comparing(String::length))
                               .orElse("");
         m_width = longest.length() + 2;
@@ -32,13 +32,11 @@ abstract public class MenuBase implements GameState {
         my2 = my + m_height - 1;
     }
 
-    @Override
-    public void render(AsciiPanel screen) {
+    @Override public void render(AsciiPanel screen) {
         GameUtils.borderArea(screen, mx, my, m_width, m_height, null);
     }
 
-    @Override
-    public void handleInput(KeyEvent e) {
+    @Override public void handleInput(KeyEvent e) {
         switch (e.getKeyCode()) {
         case KeyEvent.VK_UP:
         case KeyEvent.VK_NUMPAD8:
@@ -53,7 +51,8 @@ abstract public class MenuBase implements GameState {
             }
             break;
         case KeyEvent.VK_ESCAPE:
-            GSM.get().pop();
+            GSM.get()
+               .pop();
             break;
         case KeyEvent.VK_ENTER:
             select(items.get(selected));

@@ -29,7 +29,7 @@ public class GSM {
     }
 
     public void set(GameState state) {
-        for (int i=0; i<states.size(); i++) {
+        for (int i = 0; i < states.size(); i++) {
             pop();
         }
         push(state);

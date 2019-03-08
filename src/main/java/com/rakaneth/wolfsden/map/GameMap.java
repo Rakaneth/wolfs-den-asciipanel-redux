@@ -10,6 +10,7 @@ import squidpony.squidmath.Coord;
 import squidpony.squidmath.GreasedRegion;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,13 +19,14 @@ public class GameMap {
     private final int height;
     private final Color wallColor;
     private final Color floorColor;
-    private boolean lit;
+    boolean lit;
     private char[][] tiles;
     private double[][] resistances;
     private boolean[][] explored;
     private GreasedRegion floors;
-    private String name;
-    private String id;
+    String name;
+    String id;
+    private final ArrayList<Coord> dirty;
 
     public enum Tile {
         FLOOR(' ', null, null),
@@ -117,6 +119,45 @@ public class GameMap {
         id = "No map id";
         name = "No map name";
         connections = new HashMap<>();
+        dirty = new ArrayList<>();
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                dirtyTile(x, y);
+            }
+        }
+        lit = true;
+    }
+
+    public boolean isLit() {
+        return lit;
+    }
+
+    public Color getWallColor() {
+        return wallColor;
+    }
+
+    public Color getFloorColor() {
+        return floorColor;
+    }
+
+    public void dirtyTile(int x, int y) {
+        dirty.add(Coord.get(x, y));
+    }
+
+    public void dirtyTile(Coord c) {
+        dirty.add(c);
+    }
+
+    public void cleanTile(int x, int y) {
+        dirty.remove(Coord.get(x, y));
+    }
+
+    public void cleanTile(Coord c) {
+        dirty.remove(c);
+    }
+
+    public ArrayList<Coord> dirtyTiles() {
+        return dirty;
     }
 
     public void setTile(int x, int y, char c) {
@@ -130,8 +171,9 @@ public class GameMap {
     }
 
     public boolean inBounds(int x, int y) {
-        return GameUtils.between(x, 0, width - 1) &&
-               GameUtils.between(y, 0, height - 1);
+        return GameUtils.between(x, 0, width - 1) && GameUtils.between(y, 0,
+                                                                       height -
+                                                                       1);
     }
 
     public boolean inBounds(Coord c) {

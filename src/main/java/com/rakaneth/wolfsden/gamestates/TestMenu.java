@@ -8,13 +8,11 @@ public class TestMenu extends MenuBase {
         super(items);
     }
 
-    @Override
-    public String stateName() {
+    @Override public String stateName() {
         return "test menu";
     }
 
-    @Override
-    protected void select(MenuEntry e) {
+    @Override protected void select(MenuEntry e) {
         System.out.printf("Selected entry %s with value %s\n", e.getDisplay(),
                           e.getValue());
     }

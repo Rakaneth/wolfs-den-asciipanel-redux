@@ -1,5 +1,7 @@
 package com.rakaneth.wolfsden.entity;
 
+import com.rakaneth.wolfsden.GameContext;
+import com.rakaneth.wolfsden.map.GameMap;
 import squidpony.squidmath.Coord;
 import squidpony.squidmath.SquidID;
 
@@ -73,6 +75,11 @@ public class GameObject {
         return this.desc;
     }
 
+    public GameMap getMap() {
+        return GameContext.getInstance()
+                          .getMap(mapID);
+    }
+
     public Stat getStat(String statID) {
         return statBlock.getOrDefault(statID, Stat.ZERO_STAT);
     }
@@ -88,5 +95,37 @@ public class GameObject {
 
     public void removeStat(String statID) {
         statBlock.remove(statID);
+    }
+
+    public String getMapID() {
+        return mapID;
+    }
+
+    public int getLayer() {
+        return layer;
+    }
+
+    public Color getFG() {
+        return fg;
+    }
+
+    public Color getBG() {
+        return bg;
+    }
+
+    public char getGlyph() {
+        return glyph;
+    }
+
+    public void move(Coord c) {
+        getMap().dirtyTile(pos);
+        pos = c;
+        getMap().dirtyTile(c);
+    }
+
+    public void moveBy(int dx, int dy) {
+        int x = Math.max(0, dx + pos.x);
+        int y = Math.max(0, dx + pos.y);
+        move(Coord.get(x, y));
     }
 }
