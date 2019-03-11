@@ -125,7 +125,7 @@ public class GameObject {
 
     public void moveBy(int dx, int dy) {
         int x = Math.max(0, dx + pos.x);
-        int y = Math.max(0, dx + pos.y);
+        int y = Math.max(0, dy + pos.y);
         move(Coord.get(x, y));
     }
 }

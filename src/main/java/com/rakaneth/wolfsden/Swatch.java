@@ -12,6 +12,6 @@ public final class Swatch {
     public static final Color WOLF = new Color(191, 171, 143);
     public static final Color EXPLORE_WALL = new Color(0, 95, 191);
     public static final Color EXPLORE_FLOOR = new Color(115, 185, 255);
-    public static final Color FLOOR_STONE = Color.LIGHT_GRAY;
+    public static final Color FLOOR_STONE = Color.GRAY;
     public static final Color WALL_STONE = Color.DARK_GRAY;
 }
