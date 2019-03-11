@@ -14,7 +14,6 @@ import squidpony.squidmath.Coord;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 
 public class PlayState implements GameState {
@@ -91,18 +90,14 @@ public class PlayState implements GameState {
         GameContext ctx = GameContext.getInstance();
         GameObject player = ctx.player();
         GameMap curMap = ctx.curMap();
-        Iterator it = curMap.dirtyTiles()
-                            .iterator();
-        while (it.hasNext()) {
-            Coord toUpdate = (Coord) it.next();
-            GameMap.Tile t = curMap.getTile(toUpdate);
-            if (t == GameMap.Tile.NULL_TILE) {
-                it.remove();
-            } else {
-                Coord screenPos = curMap.toScreenCoord(player.getPos(),
-                                                       toUpdate);
+        for (int x = 0; x < GameConfig.MAP_W; x++) {
+            for (int y = 0; y < GameConfig.MAP_H; y++) {
+                Coord screenPos = Coord.get(x, y);
+                Coord mapPos = curMap.toMapCoord(player.getPos(), screenPos);
                 boolean shouldDraw = curMap.isLit();
-                if (inScreenBounds(screenPos)) {
+                // TODO: || player.canSee(mapPos)
+                GameMap.Tile t = curMap.getTile(mapPos);
+                if (t != GameMap.Tile.NULL_TILE) {
                     Color fg = t.fg;
                     Color bg = t.bg;
                     if (shouldDraw) {
@@ -114,7 +109,7 @@ public class PlayState implements GameState {
                             }
                         }
                         screen.write(t.glyph, screenPos.x, screenPos.y, fg, bg);
-                    } else if (curMap.isExplored(toUpdate)) {
+                    } else if (curMap.isExplored(mapPos)) {
                         if (bg == null) {
                             if (t == GameMap.Tile.WALL) {
                                 bg = Swatch.EXPLORE_WALL;
@@ -124,7 +119,7 @@ public class PlayState implements GameState {
                         }
                         screen.write(t.glyph, screenPos.x, screenPos.y, fg, bg);
                     }
-                    List<GameObject> stuff = ctx.thingsAt(toUpdate);
+                    List<GameObject> stuff = ctx.thingsAt(mapPos);
                     if (!stuff.isEmpty()) {
                         stuff.sort(
                             Comparator.comparingInt(GameObject::getLayer));
@@ -138,7 +133,6 @@ public class PlayState implements GameState {
                         });
                     }
                 }
-                it.remove();
             }
         }
     }
