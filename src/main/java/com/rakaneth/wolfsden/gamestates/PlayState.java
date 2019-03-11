@@ -33,7 +33,6 @@ public class PlayState implements GameState {
     }
 
     @Override public void render(AsciiPanel screen) {
-        screen.clear();
         drawMap(screen);
         drawMsgs(screen);
         drawSkills(screen);
@@ -79,9 +78,8 @@ public class PlayState implements GameState {
     }
 
     private boolean inScreenBounds(int x, int y) {
-        return GameUtils.between(0, x, GameConfig.MAP_W) && GameUtils.between(0,
-                                                                              y,
-                                                                              GameConfig.MAP_H);
+        return GameUtils.between(x, 0, GameConfig.MAP_W - 1) &&
+               GameUtils.between(y, 0, GameConfig.MAP_H - 1);
     }
 
     private boolean inScreenBounds(Coord c) {
@@ -89,6 +87,7 @@ public class PlayState implements GameState {
     }
 
     private void drawMap(AsciiPanel screen) {
+        screen.clear(' ', 0, 0, GameConfig.MAP_W, GameConfig.MAP_H);
         GameContext ctx = GameContext.getInstance();
         GameObject player = ctx.player();
         GameMap curMap = ctx.curMap();
@@ -100,43 +99,46 @@ public class PlayState implements GameState {
             if (t == GameMap.Tile.NULL_TILE) {
                 it.remove();
             } else {
-                Coord screenPos = curMap.toScreenCoord(toUpdate,
-                                                       player.getPos());
-                boolean shouldDraw = curMap.isLit() && inScreenBounds(
-                    screenPos);
-                Color fg = t.fg;
-                Color bg = t.bg;
-                if (shouldDraw) {
-                    if (bg == null) {
-                        if (t == GameMap.Tile.WALL) {
-                            bg = curMap.getWallColor();
-                        } else {
-                            bg = curMap.getFloorColor();
+                Coord screenPos = curMap.toScreenCoord(player.getPos(),
+                                                       toUpdate);
+                boolean shouldDraw = curMap.isLit();
+                if (inScreenBounds(screenPos)) {
+                    Color fg = t.fg;
+                    Color bg = t.bg;
+                    if (shouldDraw) {
+                        if (bg == null) {
+                            if (t == GameMap.Tile.WALL) {
+                                bg = curMap.getWallColor();
+                            } else {
+                                bg = curMap.getFloorColor();
+                            }
                         }
+                        screen.write(t.glyph, screenPos.x, screenPos.y, fg, bg);
+                    } else if (curMap.isExplored(toUpdate)) {
+                        if (bg == null) {
+                            if (t == GameMap.Tile.WALL) {
+                                bg = Swatch.EXPLORE_WALL;
+                            } else {
+                                bg = Swatch.EXPLORE_FLOOR;
+                            }
+                        }
+                        screen.write(t.glyph, screenPos.x, screenPos.y, fg, bg);
                     }
-                    screen.write(t.glyph, screenPos.x, screenPos.y, fg, bg);
-                } else if (curMap.isExplored(toUpdate)) {
-                    if (bg == null) {
-                        if (t == GameMap.Tile.WALL) {
-                            bg = Swatch.EXPLORE_WALL;
-                        } else {
-                            bg = Swatch.EXPLORE_FLOOR;
-                        }
+                    List<GameObject> stuff = ctx.thingsAt(toUpdate);
+                    if (!stuff.isEmpty()) {
+                        stuff.sort(
+                            Comparator.comparingInt(GameObject::getLayer));
+                        stuff.forEach(thing -> {
+                            Color cbg = thing.getBG();
+                            if (cbg == null) {
+                                cbg = curMap.getFloorColor();
+                            }
+                            screen.write(thing.getGlyph(), screenPos.x,
+                                         screenPos.y, thing.getFG(), cbg);
+                        });
                     }
-                    screen.write(t.glyph, screenPos.x, screenPos.y, fg, bg);
                 }
-                List<GameObject> stuff = ctx.thingsAt(toUpdate);
-                if (!stuff.isEmpty()) {
-                    stuff.sort(Comparator.comparingInt(GameObject::getLayer));
-                    stuff.forEach(thing -> {
-                        Color cbg = thing.getBG();
-                        if (cbg == null) {
-                            cbg = curMap.getFloorColor();
-                        }
-                        screen.write(thing.getGlyph(), screenPos.x, screenPos.y,
-                                     thing.getFG(), cbg);
-                    });
-                }
+                it.remove();
             }
         }
     }

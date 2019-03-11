@@ -17,8 +17,8 @@ import java.util.Map;
 public class GameMap {
     private final int width;
     private final int height;
-    private final Color wallColor;
-    private final Color floorColor;
+    Color wallColor;
+    Color floorColor;
     boolean lit;
     private char[][] tiles;
     private double[][] resistances;

@@ -123,6 +123,7 @@ public class GameObjectFactory {
         foetus.blockSight = blockSight;
         foetus.blockMove = blockMove;
         foetus.layer = layer;
+        foetus.mapID = mapID;
         statBlock.forEach((id, val) -> {
             foetus.addStat(id, new Stat(val));
         });

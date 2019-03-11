@@ -1,8 +1,11 @@
 package com.rakaneth.wolfsden.map;
 
 import com.rakaneth.wolfsden.GameContext;
+import com.rakaneth.wolfsden.Swatch;
 import squidpony.squidgrid.mapping.SectionDungeonGenerator;
 import squidpony.squidgrid.mapping.SerpentMapGenerator;
+
+import java.awt.*;
 
 public class MapBuilder {
     private int rooms;
@@ -15,6 +18,8 @@ public class MapBuilder {
     private boolean lit;
     private String id;
     private String name;
+    private Color wallColor;
+    private Color floorColor;
 
     public MapBuilder() {
         rooms = 0;
@@ -27,6 +32,8 @@ public class MapBuilder {
         lit = true;
         id = "No map id";
         name = "No map name";
+        wallColor = Swatch.WALL_STONE;
+        floorColor = Swatch.FLOOR_STONE;
     }
 
     public MapBuilder setDimenions(int w, int h) {
@@ -75,6 +82,16 @@ public class MapBuilder {
         return this;
     }
 
+    public MapBuilder setWallColor(Color color) {
+        wallColor = color;
+        return this;
+    }
+
+    public MapBuilder setStoneColor(Color color) {
+        floorColor = color;
+        return this;
+    }
+
     public GameMap build() {
         SerpentMapGenerator smg = new SerpentMapGenerator(width, height,
                                                           GameContext.getInstance().RNG);
@@ -92,6 +109,8 @@ public class MapBuilder {
         newMap.lit = lit;
         newMap.name = name;
         newMap.id = id;
+        newMap.wallColor = wallColor;
+        newMap.floorColor = floorColor;
         return newMap;
     }
 
