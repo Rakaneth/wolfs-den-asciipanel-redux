@@ -26,7 +26,6 @@ public class GameMap {
     private GreasedRegion floors;
     String name;
     String id;
-    private final ArrayList<Coord> dirty;
 
     public enum Tile {
         FLOOR(' ', null, null),
@@ -119,12 +118,6 @@ public class GameMap {
         id = "No map id";
         name = "No map name";
         connections = new HashMap<>();
-        dirty = new ArrayList<>();
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                dirtyTile(x, y);
-            }
-        }
         lit = true;
     }
 
@@ -138,26 +131,6 @@ public class GameMap {
 
     public Color getFloorColor() {
         return floorColor;
-    }
-
-    public void dirtyTile(int x, int y) {
-        dirty.add(Coord.get(x, y));
-    }
-
-    public void dirtyTile(Coord c) {
-        dirty.add(c);
-    }
-
-    public void cleanTile(int x, int y) {
-        dirty.remove(Coord.get(x, y));
-    }
-
-    public void cleanTile(Coord c) {
-        dirty.remove(c);
-    }
-
-    public ArrayList<Coord> dirtyTiles() {
-        return dirty;
     }
 
     public void setTile(int x, int y, char c) {

@@ -118,9 +118,7 @@ public class GameObject {
     }
 
     public void move(Coord c) {
-        getMap().dirtyTile(pos);
         pos = c;
-        getMap().dirtyTile(c);
     }
 
     public void moveBy(int dx, int dy) {
