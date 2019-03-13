@@ -20,6 +20,7 @@ public class GameObjectFactory {
     private int layer;
     private String mapID;
     private GameObject.GameObjectType type;
+    private boolean actor;
     final private Map<String, Integer> statBlock;
 
     public GameObjectFactory() {
@@ -34,6 +35,7 @@ public class GameObjectFactory {
         layer = 0;
         mapID = "No map id";
         type = GameObject.GameObjectType.CREATURE;
+        actor = false;
         statBlock = new HashMap<>();
     }
 
@@ -102,6 +104,11 @@ public class GameObjectFactory {
         return this;
     }
 
+    public GameObjectFactory setActor() {
+        actor = true;
+        return this;
+    }
+
     public GameObjectFactory setBaseCreatureStats(int str, int stam, int spd,
                                                   int skl, int sag, int smt) {
         return setStat("str", str).setStat("stam", stam)
@@ -127,6 +134,9 @@ public class GameObjectFactory {
         statBlock.forEach((id, val) -> {
             foetus.addStat(id, new Stat(val));
         });
+        if (actor) {
+            foetus.energy = 0;
+        }
         return foetus;
     }
 
@@ -142,6 +152,7 @@ public class GameObjectFactory {
                                           GameObject.GameObjectType.CREATURE)
                                       .setBaseCreatureStats(15, 15, 10, 5, 10,
                                                             5)
+                                      .setActor()
                                       .build();
     }
 }

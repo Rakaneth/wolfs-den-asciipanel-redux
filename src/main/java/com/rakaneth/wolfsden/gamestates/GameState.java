@@ -1,6 +1,7 @@
 package com.rakaneth.wolfsden.gamestates;
 
 import asciiPanel.AsciiPanel;
+import com.rakaneth.wolfsden.entity.Command;
 
 import java.awt.event.KeyEvent;
 
@@ -17,5 +18,5 @@ public interface GameState {
 
     void render(AsciiPanel screen);
 
-    void handleInput(KeyEvent e);
+    Command handleInput(KeyEvent e);
 }

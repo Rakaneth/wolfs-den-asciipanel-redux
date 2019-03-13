@@ -3,6 +3,8 @@ package com.rakaneth.wolfsden.gamestates;
 import asciiPanel.AsciiPanel;
 import com.rakaneth.wolfsden.GameConfig;
 import com.rakaneth.wolfsden.GameUtils;
+import com.rakaneth.wolfsden.entity.Command;
+import com.rakaneth.wolfsden.entity.OutOfWorldCommand;
 
 import java.awt.event.KeyEvent;
 import java.util.Comparator;
@@ -36,7 +38,7 @@ abstract public class MenuBase implements GameState {
         GameUtils.borderArea(screen, mx, my, m_width, m_height, null);
     }
 
-    @Override public void handleInput(KeyEvent e) {
+    @Override public Command handleInput(KeyEvent e) {
         switch (e.getKeyCode()) {
         case KeyEvent.VK_UP:
         case KeyEvent.VK_NUMPAD8:
@@ -58,6 +60,7 @@ abstract public class MenuBase implements GameState {
             select(items.get(selected));
             break;
         }
+        return new OutOfWorldCommand();
     }
 
     abstract protected void select(MenuEntry e);

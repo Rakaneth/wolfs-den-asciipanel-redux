@@ -5,9 +5,7 @@ import com.rakaneth.wolfsden.map.GameMap;
 import squidpony.squidmath.Coord;
 import squidpony.squidmath.RNG;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class GameContext {
@@ -16,11 +14,14 @@ public class GameContext {
     private final Map<String, GameObject> things;
     private final Map<String, GameMap> maps;
     private String curMapID;
+    private List<String> messages;
+    private boolean running = false;
 
     GameContext() {
         RNG = GameConfig.RNG;
         things = new HashMap<>();
         maps = new HashMap<>();
+        messages = new ArrayList<>();
     }
 
     public static GameContext getInstance() {
@@ -70,6 +71,14 @@ public class GameContext {
                      .collect(Collectors.toList());
     }
 
+    public Optional<GameObject> getBlockerAt(Coord c) {
+        return things.values()
+                     .stream()
+                     .filter(el -> el.getPos() == c && isHere(el) &&
+                                   el.isBlockMove())
+                     .findFirst();
+    }
+
     public void changeMap(GameMap.MapConnection conn) {
         curMapID = conn.toMapID;
         player().move(conn.toPt);
@@ -77,6 +86,26 @@ public class GameContext {
 
     public void changeMap(String mapID) {
         curMapID = mapID;
+    }
+
+    public void addMessage(String msg) {
+        messages.add(msg);
+    }
+
+    public List<String> getMessages() {
+        return messages;
+    }
+
+    public void pause() {
+        running = false;
+    }
+
+    public void unpause() {
+        running = true;
+    }
+
+    public boolean isRunning() {
+        return running;
     }
 
 }

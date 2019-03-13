@@ -1,6 +1,8 @@
 package com.rakaneth.wolfsden;
 
 import asciiPanel.AsciiPanel;
+import com.rakaneth.wolfsden.entity.Command;
+import com.rakaneth.wolfsden.entity.CommandResult;
 import com.rakaneth.wolfsden.gamestates.GSM;
 import com.rakaneth.wolfsden.gamestates.GameState;
 import com.rakaneth.wolfsden.gamestates.TitleState;
@@ -46,7 +48,12 @@ public class Program extends JFrame implements KeyListener {
     @Override public void keyPressed(KeyEvent e) {
         GameState curState = GSM.get()
                                 .curState();
-        curState.handleInput(e);
+
+        Command cmd = curState.handleInput(e);
+        //TODO: energy system
+        CommandResult result = cmd.execute(GameContext.getInstance()
+                                                      .player());
+
         if (GSM.get()
                .stackEmpty()) {
             System.exit(0);

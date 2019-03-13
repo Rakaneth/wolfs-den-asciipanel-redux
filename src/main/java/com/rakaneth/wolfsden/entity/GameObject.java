@@ -9,7 +9,7 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GameObject {
+public class GameObject implements Upkeep {
     Coord pos;
     char glyph;
     Color fg;
@@ -23,6 +23,7 @@ public class GameObject {
     boolean blockSight;
     final Map<String, Stat> statBlock;
     final GameObjectType type;
+    double energy;
 
     public enum GameObjectType {
         CREATURE,
@@ -49,10 +50,19 @@ public class GameObject {
         this.blockMove = false;
         this.blockSight = false;
         statBlock = new HashMap<>();
+        energy = -1;
     }
 
     GameObject(GameObjectType type) {
         this(type, null);
+    }
+
+    @Override public void tick(int ticks) {
+        if (isActor()) {
+            energy += (double) getStatValue("spd") / 100 * ticks;
+            statBlock.values()
+                     .forEach(stat -> stat.tick(ticks));
+        }
     }
 
     public Coord getPos() {
@@ -117,6 +127,10 @@ public class GameObject {
         return glyph;
     }
 
+    public boolean isBlockMove() {
+        return blockMove;
+    }
+
     public void move(Coord c) {
         pos = c;
     }
@@ -125,5 +139,13 @@ public class GameObject {
         int x = Math.max(0, dx + pos.x);
         int y = Math.max(0, dy + pos.y);
         move(Coord.get(x, y));
+    }
+
+    public void changeEnergy(int amt) {
+        energy = Math.max(energy + amt, 0);
+    }
+
+    public boolean isActor() {
+        return energy >= 0;
     }
 }

@@ -10,7 +10,6 @@ import squidpony.squidmath.Coord;
 import squidpony.squidmath.GreasedRegion;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -177,7 +176,7 @@ public class GameMap {
         return getTile(c).blockSight;
     }
 
-    public boolean blookMove(Coord c) {
+    public boolean blockMove(Coord c) {
         return getTile(c).blockMove;
     }
 
