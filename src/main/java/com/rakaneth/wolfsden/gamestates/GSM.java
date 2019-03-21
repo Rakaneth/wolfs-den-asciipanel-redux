@@ -1,5 +1,6 @@
 package com.rakaneth.wolfsden.gamestates;
 
+import java.util.Iterator;
 import java.util.Stack;
 
 public class GSM {
@@ -41,5 +42,9 @@ public class GSM {
 
     public boolean stackEmpty() {
         return states.empty();
+    }
+
+    public Iterator<GameState> iterator() {
+        return states.iterator();
     }
 }

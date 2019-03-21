@@ -5,6 +5,9 @@ import com.rakaneth.wolfsden.GameConfig;
 import com.rakaneth.wolfsden.GameContext;
 import com.rakaneth.wolfsden.GameUtils;
 import com.rakaneth.wolfsden.Swatch;
+import com.rakaneth.wolfsden.commands.Command;
+import com.rakaneth.wolfsden.commands.MoveByCommand;
+import com.rakaneth.wolfsden.commands.OutOfWorldCommand;
 import com.rakaneth.wolfsden.entity.GameObject;
 import com.rakaneth.wolfsden.entity.GameObjectFactory;
 import com.rakaneth.wolfsden.map.GameMap;
@@ -27,6 +30,9 @@ public class PlayState implements GameState {
         MapBuilder.sampleMap();
         ctx.changeMap("mines");
         GameObject player = GameObjectFactory.samplePlayer("mines");
+        var startPos = ctx.curMap()
+                          .randomFloor();
+        player.move(startPos);
         ctx.addEntity(player);
         GameState.super.enter();
     }
@@ -39,41 +45,43 @@ public class PlayState implements GameState {
         drawStats(screen);
     }
 
-    @Override public void handleInput(KeyEvent e) {
+    @Override public Command handleInput(KeyEvent e) {
         GameObject player = GameContext.getInstance()
                                        .player();
+        Command cmd = new OutOfWorldCommand();
         switch (e.getKeyCode()) {
         case KeyEvent.VK_NUMPAD8:
         case KeyEvent.VK_UP:
-            player.moveBy(0, -1);
+            cmd = new MoveByCommand(0, -1);
             break;
         case KeyEvent.VK_NUMPAD9:
-            player.moveBy(1, -1);
+            cmd = new MoveByCommand(1, -1);
             break;
         case KeyEvent.VK_NUMPAD6:
         case KeyEvent.VK_RIGHT:
-            player.moveBy(1, 0);
+            cmd = new MoveByCommand(1, 0);
             break;
         case KeyEvent.VK_NUMPAD3:
-            player.moveBy(1, 1);
+            cmd = new MoveByCommand(1, 1);
             break;
         case KeyEvent.VK_NUMPAD2:
         case KeyEvent.VK_DOWN:
-            player.moveBy(0, 1);
+            cmd = new MoveByCommand(0, 1);
             break;
         case KeyEvent.VK_NUMPAD1:
-            player.moveBy(-1, 1);
+            cmd = new MoveByCommand(-1, 1);
             break;
         case KeyEvent.VK_NUMPAD4:
         case KeyEvent.VK_LEFT:
-            player.moveBy(-1, 0);
+            cmd = new MoveByCommand(-1, 0);
             break;
         case KeyEvent.VK_NUMPAD7:
-            player.moveBy(-1, -1);
+            cmd = new MoveByCommand(-1, -1);
             break;
         default:
             System.out.printf("Key %d pressed", e.getKeyCode());
         }
+        return cmd;
     }
 
     private boolean inScreenBounds(int x, int y) {

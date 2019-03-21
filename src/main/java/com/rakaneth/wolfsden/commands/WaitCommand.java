@@ -1,4 +1,6 @@
-package com.rakaneth.wolfsden.entity;
+package com.rakaneth.wolfsden.commands;
+
+import com.rakaneth.wolfsden.entity.GameObject;
 
 public class WaitCommand implements Command {
 

@@ -1,8 +1,8 @@
 package com.rakaneth.wolfsden;
 
 import asciiPanel.AsciiPanel;
-import com.rakaneth.wolfsden.entity.Command;
-import com.rakaneth.wolfsden.entity.CommandResult;
+import com.rakaneth.wolfsden.commands.Command;
+import com.rakaneth.wolfsden.commands.CommandResult;
 import com.rakaneth.wolfsden.gamestates.GSM;
 import com.rakaneth.wolfsden.gamestates.GameState;
 import com.rakaneth.wolfsden.gamestates.TitleState;
@@ -16,7 +16,7 @@ public class Program extends JFrame implements KeyListener {
 
     private AsciiPanel screen;
 
-    public Program() {
+    private Program() {
         super();
         screen = new AsciiPanel(100, 40);
         add(screen);
@@ -28,9 +28,13 @@ public class Program extends JFrame implements KeyListener {
     }
 
     public void repaint() {
-        GSM.get()
-           .curState()
-           .render(screen);
+        screen.clear();
+        var it = GSM.get()
+                    .iterator();
+        while (it.hasNext()) {
+            var toDraw = it.next();
+            toDraw.render(screen);
+        }
         super.repaint();
     }
 
@@ -51,8 +55,14 @@ public class Program extends JFrame implements KeyListener {
 
         Command cmd = curState.handleInput(e);
         //TODO: energy system
-        CommandResult result = cmd.execute(GameContext.getInstance()
-                                                      .player());
+        var player = GameContext.getInstance()
+                                .player();
+
+        CommandResult result = cmd.execute(player);
+        while (!result.done()) {
+            var newCmd = result.alternate();
+            result = newCmd.execute(player);
+        }
 
         if (GSM.get()
                .stackEmpty()) {

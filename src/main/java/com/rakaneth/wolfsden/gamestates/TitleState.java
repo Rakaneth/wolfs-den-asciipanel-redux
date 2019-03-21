@@ -1,6 +1,8 @@
 package com.rakaneth.wolfsden.gamestates;
 
 import asciiPanel.AsciiPanel;
+import com.rakaneth.wolfsden.commands.Command;
+import com.rakaneth.wolfsden.commands.OutOfWorldCommand;
 
 import java.awt.event.KeyEvent;
 
@@ -11,11 +13,10 @@ public class TitleState implements GameState {
     }
 
     @Override public void render(AsciiPanel screen) {
-        screen.clear();
         screen.writeCenter("Welcome to Wolf's Den 1.5", 20);
     }
 
-    @Override public void handleInput(KeyEvent e) {
+    @Override public Command handleInput(KeyEvent e) {
         switch (e.getKeyCode()) {
         case KeyEvent.VK_ESCAPE:
             GSM.get()
@@ -25,5 +26,6 @@ public class TitleState implements GameState {
             GSM.get()
                .push(new NewGameMenu());
         }
+        return new OutOfWorldCommand();
     }
 }

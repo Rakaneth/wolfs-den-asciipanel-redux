@@ -1,4 +1,4 @@
-package com.rakaneth.wolfsden.entity;
+package com.rakaneth.wolfsden.commands;
 
 public class Done implements CommandResult {
     private int timeTaken;
@@ -9,5 +9,13 @@ public class Done implements CommandResult {
 
     public int getTimeTaken() {
         return timeTaken;
+    }
+
+    @Override public boolean done() {
+        return true;
+    }
+
+    @Override public Command alternate() {
+        return null;
     }
 }

@@ -1,6 +1,7 @@
-package com.rakaneth.wolfsden.entity;
+package com.rakaneth.wolfsden.commands;
 
 import com.rakaneth.wolfsden.GameContext;
+import com.rakaneth.wolfsden.entity.GameObject;
 
 public class InteractCommand implements Command {
     private GameObject blocker;

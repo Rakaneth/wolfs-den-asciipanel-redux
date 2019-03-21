@@ -1,6 +1,7 @@
-package com.rakaneth.wolfsden.entity;
+package com.rakaneth.wolfsden.commands;
 
 import com.rakaneth.wolfsden.GameContext;
+import com.rakaneth.wolfsden.entity.GameObject;
 import squidpony.squidmath.Coord;
 
 import java.util.Optional;

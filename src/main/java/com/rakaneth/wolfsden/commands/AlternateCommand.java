@@ -1,4 +1,4 @@
-package com.rakaneth.wolfsden.entity;
+package com.rakaneth.wolfsden.commands;
 
 public class AlternateCommand implements CommandResult {
     private Command alternate;
@@ -7,7 +7,7 @@ public class AlternateCommand implements CommandResult {
         alternate = cmd;
     }
 
-    public Command getAlternate() {
+    public Command alternate() {
         return alternate;
     }
 }

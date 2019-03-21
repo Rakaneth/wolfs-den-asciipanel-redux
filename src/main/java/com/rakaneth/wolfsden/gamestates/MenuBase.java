@@ -3,8 +3,8 @@ package com.rakaneth.wolfsden.gamestates;
 import asciiPanel.AsciiPanel;
 import com.rakaneth.wolfsden.GameConfig;
 import com.rakaneth.wolfsden.GameUtils;
-import com.rakaneth.wolfsden.entity.Command;
-import com.rakaneth.wolfsden.entity.OutOfWorldCommand;
+import com.rakaneth.wolfsden.commands.Command;
+import com.rakaneth.wolfsden.commands.OutOfWorldCommand;
 
 import java.awt.event.KeyEvent;
 import java.util.Comparator;

@@ -1,7 +1,7 @@
 package com.rakaneth.wolfsden.gamestates;
 
 import asciiPanel.AsciiPanel;
-import com.rakaneth.wolfsden.entity.Command;
+import com.rakaneth.wolfsden.commands.Command;
 
 import java.awt.event.KeyEvent;
 
